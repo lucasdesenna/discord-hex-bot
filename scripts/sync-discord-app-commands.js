@@ -1,0 +1,1 @@
+fetch('http://localhost:3000/admin/discord/app-commands/sync', { method: 'post' })
