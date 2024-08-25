@@ -11,7 +11,9 @@
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "exec": "node ./",
-    "discord:sync-app-commands": "node ./scripts/sync-discord-app-commands.js"
+    "discord:get-commands": "tsx ./scripts/discord-commands/get.ts",
+    "discord:bulk-overwrite-commands": "tsx ./scripts/discord-commands/bulk-overwrite.ts",
+    "discord:bulk-delete-commands": "tsx ./scripts/discord-commands/bulk-delete.ts"
   },
   "keywords": [
     "discord",
@@ -30,6 +32,7 @@
     "concurrently": "^8.2.2",
     "ts-loader": "^9.5.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "tsx": "^4.18.0",
     "typescript": "^5.5.4",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",

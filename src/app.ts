@@ -1,14 +1,14 @@
 import configs from "configs";
-import { NodeEnv } from "configs/server";
 import { registerRestApiRoutes } from "routes";
-import { syncAllDiscordApplicationCommands } from "services/discordCommands";
 import { registerDiscordInteractionHandlers } from "services/discordInteractions";
 import system from "system";
+import { greenText } from "utils/text";
 
 registerRestApiRoutes(system);
 registerDiscordInteractionHandlers(system);
 
-if (configs.SERVER.NODE_ENV === NodeEnv.PRODUCTION)
-  syncAllDiscordApplicationCommands(system);
-
 system.dicordClient.login(configs.DISCORD.BOT_TOKEN);
+
+system.expressApp.listen(configs.SERVER.PORT, () => {
+  console.log(greenText(`Listening on port ${configs.SERVER.PORT}`));
+});

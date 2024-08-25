@@ -25,7 +25,6 @@ export const registerDiscordInteractionHandlers = async ({
 
   dicordClient.on("interactionCreate", async (interaction: Interaction) => {
     if (!interaction.isChatInputCommand()) return;
-
     await handleDiscordInteraction(interaction as ChatInputCommandInteraction);
   });
 

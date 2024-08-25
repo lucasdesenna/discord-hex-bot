@@ -7,9 +7,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "baseUrl": "./src/",
+    "paths": {
+      "scripts/*": ["./scripts/*"]
+    },
     "resolveJsonModule": true,
     "noImplicitAny": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "scripts/**/*"]
 }

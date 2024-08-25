@@ -1,21 +1,42 @@
+import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 import { RequestHandler } from "express";
-import { syncAllDiscordApplicationCommands } from "services/discordCommands";
+import {
+  bulkDeleteDiscordApplicationCommands as bulkDeleteDiscordApplicationGlobalCommands,
+  bulkOverwriteDiscordApplicationCommands as bulkOverwriteDiscordApplicationGlobalCommands,
+} from "services/discordCommands";
 import system from "system";
-import { blueText, greenText } from "utils/text";
+import { asBulletPoint, blueText, greenText } from "utils/text";
 
-export const handleSyncApplicationCommands: RequestHandler = async (
-  _,
-  res,
-  next
-) => {
-  console.log(blueText("Syncing application (/) commands..."));
+export const bulkOverwriteDiscordApplicationGlobalCommandsController: RequestHandler =
+  async ({ body }, res, next) => {
+    const commands: RESTPostAPIChatInputApplicationCommandsJSONBody[] = body;
 
-  try {
-    await syncAllDiscordApplicationCommands(system);
-    console.log(greenText("Application (/) commands synced."));
-    res.status(201).send();
-  } catch (error) {
-    console.error("Failed to sync (/) commands:", error);
-    next(error);
-  }
-};
+    console.log(
+      blueText(
+        `Overwritting the following discord commands:\n${commands
+          .map((command) => asBulletPoint(command.name))
+          .join("\n")}\n}`
+      )
+    );
+    try {
+      await bulkOverwriteDiscordApplicationGlobalCommands(system, commands);
+      console.log(greenText("Discord commands successfully overwritten."));
+      res.status(201).send();
+    } catch (err) {
+      console.error("Failed to overwrite discord commands:", err);
+      next(err);
+    }
+  };
+
+export const bulkDeleteDiscordApplicationGlobalCommandsController: RequestHandler =
+  async (_, res, next) => {
+    console.log(blueText("Deleting all discord commands..."));
+    try {
+      await bulkDeleteDiscordApplicationGlobalCommands(system);
+      console.log(greenText("Discord commands successfully deleted."));
+      res.status(201).send();
+    } catch (err) {
+      console.error("Failed to delete discord commands:", err);
+      next(err);
+    }
+  };

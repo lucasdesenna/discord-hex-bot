@@ -16,3 +16,5 @@ export const blueText = withBoundColor(COLORS.BLUE);
 export const greenText = withBoundColor(COLORS.GREEN);
 export const redText = withBoundColor(COLORS.RED);
 export const yellowText = withBoundColor(COLORS.RED);
+
+export const asBulletPoint = (text: string) => "  • " + text;

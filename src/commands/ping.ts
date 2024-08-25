@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import CommandBlueprint from "types/CommandBlueprint";
 
-const pingCommandBlueprint: CommandBlueprint = {
+const PING_COMMAND: CommandBlueprint = {
   definition: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Replies with Pong!"),
@@ -10,4 +10,4 @@ const pingCommandBlueprint: CommandBlueprint = {
   },
 };
 
-export default pingCommandBlueprint;
+export default PING_COMMAND;

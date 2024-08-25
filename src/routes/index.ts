@@ -42,9 +42,7 @@ export const registerRestApiRoutes = ({ expressApp }: System) => {
   expressApp.use(router);
   expressApp.use(missingRouteHandler);
 
-  expressApp.listen(configs.SERVER.PORT, () => {
-    console.log(greenText(`Listening on port ${configs.SERVER.PORT}`));
-  });
+  console.log(greenText(`REST API routes registed.`));
 };
 
 export default router;
