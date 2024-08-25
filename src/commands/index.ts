@@ -1,21 +1,11 @@
-import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
+import { Collection } from "discord.js";
 import pingCommandBlueprint from "./ping";
-import { CommandHandler } from "types/CommandBlueprint";
+import CommandBlueprint from "types/CommandBlueprint";
 
-const COMMAND_BLUEPRINTS = [pingCommandBlueprint];
+const COMMANDS: Collection<string, CommandBlueprint> = new Collection();
 
-const COMMAND_INDEX: {
-  DEFINITIONS: RESTPostAPIChatInputApplicationCommandsJSONBody[];
-  HANDLERS_BY_COMMAND_NAME: Record<string, CommandHandler>;
-} = {
-  DEFINITIONS: [],
-  HANDLERS_BY_COMMAND_NAME: {},
-};
-
-COMMAND_BLUEPRINTS.forEach((commandBlueprint) => {
-  COMMAND_INDEX.DEFINITIONS.push(commandBlueprint.definition.toJSON());
-  COMMAND_INDEX.HANDLERS_BY_COMMAND_NAME[commandBlueprint.definition.name] =
-    commandBlueprint.handler;
+[pingCommandBlueprint].forEach((commandBlueprint) => {
+  COMMANDS.set(commandBlueprint.definition.name, commandBlueprint);
 });
 
-export default COMMAND_INDEX;
+export default COMMANDS;

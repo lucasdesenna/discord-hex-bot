@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, Interaction } from "discord.js";
-import COMMAND_INDEX from "commands";
+import COMMANDS from "commands";
 import { CommandHandler } from "types/CommandBlueprint";
 import { blueText, greenText } from "utils/text";
 import System from "types/System";
@@ -12,8 +12,7 @@ export const handleDiscordInteraction: CommandHandler = async (interaction) => {
   const { commandName } = interaction;
 
   const interactionHandler = commandName
-    ? COMMAND_INDEX.HANDLERS_BY_COMMAND_NAME[commandName] ||
-      handleInvalidInteraction
+    ? COMMANDS.get(commandName)?.handler || handleInvalidInteraction
     : handleInvalidInteraction;
 
   await interactionHandler(interaction);
