@@ -1,7 +1,7 @@
 import configs from "configs";
 import {
   RESTGetAPIApplicationCommandResult,
-  RESTPostAPIChatInputApplicationCommandsJSONBody,
+  RESTPostAPIApplicationCommandsJSONBody,
   RESTPutAPIApplicationCommandsResult,
   Routes,
 } from "discord.js";
@@ -16,7 +16,7 @@ export const getDiscordApplicationCommands = async ({
 
 export const bulkOverwriteDiscordApplicationCommands = async (
   { discordRestApi }: System,
-  commands: RESTPostAPIChatInputApplicationCommandsJSONBody[]
+  commands: RESTPostAPIApplicationCommandsJSONBody[]
 ) =>
   discordRestApi.put(Routes.applicationCommands(configs.DISCORD.APP_ID), {
     body: commands,

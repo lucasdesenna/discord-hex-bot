@@ -1,21 +1,44 @@
-import { ChatInputCommandInteraction, Interaction } from "discord.js";
+import {
+  CommandInteraction,
+  Interaction,
+  MessageComponentInteraction,
+} from "discord.js";
 import COMMANDS from "commands";
-import { CommandHandler } from "types/CommandBlueprint";
 import { blueText, greenText } from "utils/text";
 import System from "types/System";
 
-const handleInvalidInteraction: CommandHandler = async ({ commandName }) => {
-  console.error("unknown interaction type", commandName);
+const handleInvalidInteraction = async (interaction: any) => {
+  console.error("unknown interaction type", interaction);
 };
 
-export const handleDiscordInteraction: CommandHandler = async (interaction) => {
+export const handleDiscordCommandInteraction = (
+  interaction: CommandInteraction
+) => {
   const { commandName } = interaction;
+  const interactionHandler =
+    COMMANDS.get(commandName)?.commandInteractionHandler ??
+    handleInvalidInteraction;
 
-  const interactionHandler = commandName
-    ? COMMANDS.get(commandName)?.handler || handleInvalidInteraction
-    : handleInvalidInteraction;
+  return interactionHandler(interaction);
+};
 
-  await interactionHandler(interaction);
+export const handleDiscordMessageInteraction = async (
+  interaction: MessageComponentInteraction
+) => {
+  let handleInteraction = handleInvalidInteraction;
+  const commandName = interaction.message.interaction?.commandName;
+
+  if (commandName) {
+    const handlers =
+      COMMANDS.get(commandName)?.messageComponentInteractionHandlers;
+
+    if (handlers) {
+      handleInteraction =
+        handlers[interaction.customId] ?? handleInvalidInteraction;
+    }
+  }
+
+  await handleInteraction(interaction);
 };
 
 export const registerDiscordInteractionHandlers = async ({
@@ -24,8 +47,12 @@ export const registerDiscordInteractionHandlers = async ({
   console.log(blueText("Registering Discord interaction handlers..."));
 
   dicordClient.on("interactionCreate", async (interaction: Interaction) => {
-    if (!interaction.isChatInputCommand()) return;
-    await handleDiscordInteraction(interaction as ChatInputCommandInteraction);
+    if (interaction.isCommand()) {
+      await handleDiscordCommandInteraction(interaction);
+    } else if (interaction.isMessageComponent()) {
+      await handleDiscordMessageInteraction(interaction);
+    }
+    console.log(interaction);
   });
 
   console.log(greenText("Discord interaction handlers registered."));

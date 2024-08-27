@@ -1,12 +1,30 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import {
+  CommandInteraction,
+  ContextMenuCommandBuilder,
+  MessageComponentInteraction,
+  SlashCommandBuilder,
+} from "discord.js";
 
-export type CommandHandler = (
-  interaction: ChatInputCommandInteraction
-) => Promise<void>;
+export type commandInteractionHandler = (
+  interaction: CommandInteraction
+) => Promise<any>;
 
-type CommandBlueprint = {
-  definition: SlashCommandBuilder;
-  handler: CommandHandler;
+export type messageComponentInteractionHandler = (
+  interaction: MessageComponentInteraction
+) => Promise<any>;
+
+type CommandBlueprint<BuilderType> = {
+  definition: BuilderType;
+  commandInteractionHandler: commandInteractionHandler;
+  messageComponentInteractionHandlers?: Record<
+    string,
+    messageComponentInteractionHandler
+  >;
 };
+
+export type ContextMenuCommandBlueprint =
+  CommandBlueprint<ContextMenuCommandBuilder>;
+
+export type SlashCommandBlueprint = CommandBlueprint<SlashCommandBuilder>;
 
 export default CommandBlueprint;

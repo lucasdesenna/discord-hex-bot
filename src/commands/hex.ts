@@ -1,30 +1,69 @@
 import {
-  SlashCommandBuilder,
-  ChatInputCommandInteraction,
   ActionRowBuilder,
   InteractionReplyOptions,
-  UserSelectMenuBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
+  ApplicationCommandType,
+  ContextMenuCommandBuilder,
+  StringSelectMenuInteraction,
 } from "discord.js";
-import CommandBlueprint from "types/CommandBlueprint";
+import CommandBlueprint, {
+  commandInteractionHandler,
+  messageComponentInteractionHandler,
+} from "types/CommandBlueprint";
 
-const memberSelectorRow = () => {
-  const select = new UserSelectMenuBuilder()
-    .setCustomId("member-selector")
-    .setPlaceholder("Select a channel member");
+const hexes = [
+  {
+    name: "The Curse of Roaming Solitude",
+    description:
+      "Moves target server member to an empty voice channel whenerver they say something.",
+    activationHandler: () => {},
+  },
+];
 
-  return new ActionRowBuilder().addComponents(select);
+const hexSelectionRow = () => {
+  const hexSelect = new StringSelectMenuBuilder()
+    .setCustomId("hexSelect")
+    .setPlaceholder("Select a hex")
+    .addOptions(
+      ...hexes.map((hex) =>
+        new StringSelectMenuOptionBuilder()
+          .setLabel(hex.name)
+          .setDescription(hex.description)
+          .setValue(hex.name)
+      )
+    );
+
+  return new ActionRowBuilder().addComponents(hexSelect);
 };
 
-const HEX_COMMAND: CommandBlueprint = {
-  definition: new SlashCommandBuilder()
+const initialHandler: commandInteractionHandler = async (interaction) => {
+  await interaction.reply({
+    content: "Select a hex:",
+    components: [hexSelectionRow()],
+    ephemeral: true,
+  } as InteractionReplyOptions);
+};
+
+const hexSelectionHandler: messageComponentInteractionHandler = async (
+  interaction
+) => {
+  await interaction.reply({
+    content: `User ${
+      interaction.user.displayName
+    } is now under the effect of "${
+      (interaction as StringSelectMenuInteraction).values[0]
+    }"`,
+    ephemeral: true,
+  } as InteractionReplyOptions);
+};
+
+const HEX_COMMAND: CommandBlueprint<ContextMenuCommandBuilder> = {
+  definition: new ContextMenuCommandBuilder()
     .setName("hex")
-    .setDescription("Hexes a channel member."),
-  handler: async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply({
-      content: "Choose a channel member to hex:",
-      components: [memberSelectorRow()],
-    } as InteractionReplyOptions);
-  },
+    .setType(ApplicationCommandType.User),
+  commandInteractionHandler: initialHandler,
+  messageComponentInteractionHandlers: { hexSelect: hexSelectionHandler },
 };
 
 export default HEX_COMMAND;
