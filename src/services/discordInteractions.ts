@@ -42,11 +42,11 @@ export const handleDiscordMessageInteraction = async (
 };
 
 export const registerDiscordInteractionHandlers = async ({
-  dicordClient,
+  discordClient,
 }: System) => {
   console.log(blueText("Registering Discord interaction handlers..."));
 
-  dicordClient.on("interactionCreate", async (interaction: Interaction) => {
+  discordClient.on("interactionCreate", async (interaction: Interaction) => {
     if (interaction.isCommand()) {
       await handleDiscordCommandInteraction(interaction);
     } else if (interaction.isMessageComponent()) {

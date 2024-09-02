@@ -8,7 +8,7 @@ const system: System = {
   discordRestApi: new REST({ version: "10" }).setToken(
     configs.DISCORD.BOT_TOKEN
   ),
-  dicordClient: new Client({ intents: [GatewayIntentBits.Guilds] }),
+  discordClient: new Client({ intents: [GatewayIntentBits.Guilds] }),
 };
 
 export default system;

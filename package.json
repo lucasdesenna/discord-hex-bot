@@ -1,7 +1,7 @@
 {
   "name": "discord-hex-bot",
   "version": "0.0.1",
-  "description": "A cutesy little bot allows admins to hex channels members",
+  "description": "A cutesy little bot allows admins to hex channel members",
   "main": "dist/main.js",
   "scripts": {
     "start": "npm run watch",

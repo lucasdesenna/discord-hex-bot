@@ -2,9 +2,9 @@ import { Client, REST } from "discord.js";
 import { Express } from "express";
 
 type System = {
-  expressApp: Express;
+  discordClient: Client;
   discordRestApi: REST;
-  dicordClient: Client;
+  expressApp: Express;
 };
 
 export default System;
