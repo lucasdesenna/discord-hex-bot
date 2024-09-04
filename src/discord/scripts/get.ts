@@ -1,7 +1,13 @@
-import "dotenv/config";
-import { getDiscordApplicationCommands } from "services/discordCommands";
+import configs from "configs";
+import { Routes, RESTGetAPIApplicationCommandResult } from "discord.js";
 import system from "system";
+import System from "types/System";
 import { blueText, greenText } from "utils/text";
+
+const getDiscordApplicationCommands = async ({ discordRestApi }: System) =>
+  discordRestApi.get(
+    Routes.applicationCommands(configs.DISCORD.APP_ID)
+  ) as Promise<RESTGetAPIApplicationCommandResult[]>;
 
 (async () => {
   console.log(blueText("Getting discord commands."));

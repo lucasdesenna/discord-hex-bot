@@ -3,9 +3,8 @@ import {
   Interaction,
   MessageComponentInteraction,
 } from "discord.js";
-import COMMANDS from "commands";
-import { blueText, greenText } from "utils/text";
-import System from "types/System";
+import COMMANDS from "discord/commands";
+import { redText } from "utils/text";
 
 const handleInvalidInteraction = async (interaction: any) => {
   console.error("unknown interaction type", interaction);
@@ -41,19 +40,11 @@ export const handleDiscordMessageInteraction = async (
   await handleInteraction(interaction);
 };
 
-export const registerDiscordInteractionHandlers = async ({
-  discordClient,
-}: System) => {
-  console.log(blueText("Registering Discord interaction handlers..."));
-
-  discordClient.on("interactionCreate", async (interaction: Interaction) => {
-    if (interaction.isCommand()) {
-      await handleDiscordCommandInteraction(interaction);
-    } else if (interaction.isMessageComponent()) {
-      await handleDiscordMessageInteraction(interaction);
-    }
-    console.log(interaction);
-  });
-
-  console.log(greenText("Discord interaction handlers registered."));
+export const handleDiscordInteraction = async (interaction: Interaction) => {
+  if (interaction.isCommand()) {
+    await handleDiscordCommandInteraction(interaction);
+  } else if (interaction.isMessageComponent()) {
+    await handleDiscordMessageInteraction(interaction);
+  }
+  console.log(redText("Unknown interaction type:"), interaction);
 };

@@ -9,9 +9,6 @@
     "moduleResolution": "bundler",
     "outDir": "dist",
     "baseUrl": "./src/",
-    "paths": {
-      "scripts/*": ["./scripts/*"]
-    },
     "resolveJsonModule": true,
     "noImplicitAny": true,
     "esModuleInterop": true,

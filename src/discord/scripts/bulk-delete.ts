@@ -1,7 +1,15 @@
-import "dotenv/config";
-import { bulkDeleteDiscordApplicationCommands } from "services/discordCommands";
+import configs from "configs";
+import { Routes, RESTPutAPIApplicationCommandsResult } from "discord.js";
 import system from "system";
+import System from "types/System";
 import { blueText, greenText } from "utils/text";
+
+const bulkDeleteDiscordApplicationCommands = async ({
+  discordRestApi,
+}: System) =>
+  discordRestApi.put(Routes.applicationCommands(configs.DISCORD.APP_ID), {
+    body: [],
+  }) as Promise<RESTPutAPIApplicationCommandsResult>;
 
 (async () => {
   console.log(blueText("Deleting all discord commands..."));
