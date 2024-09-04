@@ -5,6 +5,8 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "baseUrl": "./src/",
     "paths": {
@@ -12,7 +14,8 @@
     },
     "resolveJsonModule": true,
     "noImplicitAny": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*", "scripts/**/*"]
+  "include": ["src/**/*"]
 }
