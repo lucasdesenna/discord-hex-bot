@@ -1,0 +1,10 @@
+{
+  "callbackWaitsForEmptyEventLoop": false,
+  "functionName": "functionName",
+  "functionVersion": "functionVersion",
+  "invokedFunctionArn": "invokedFunctionArn",
+  "memoryLimitInMB": "memoryLimitInMB",
+  "awsRequestId": "awsRequestId",
+  "logGroupName": "logGroupName",
+  "logStreamName": "logStreamName"
+}

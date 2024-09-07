@@ -9,13 +9,13 @@
     "outDir": "dist",
     "baseUrl": "./src/",
     "paths": {
-      "resources/*": ["../resources/*"],
-      "test/*": ["../test/*"]
+      "fixtures/*": ["../tests/fixtures/*"],
+      "resources/*": ["../resources/*"]
     },
     "resolveJsonModule": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }
