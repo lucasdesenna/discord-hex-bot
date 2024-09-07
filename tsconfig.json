@@ -5,10 +5,13 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "node16",
     "outDir": "dist",
     "baseUrl": "./src/",
+    "paths": {
+      "resources/*": ["../resources/*"],
+      "test/*": ["../test/*"]
+    },
     "resolveJsonModule": true,
     "noImplicitAny": true,
     "esModuleInterop": true,

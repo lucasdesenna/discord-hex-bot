@@ -7,7 +7,7 @@ import nodeExternals from "webpack-node-externals";
 const lambdasDirPath = "./src/lambdas/";
 
 const getEntryName = (fileName: string): string | null => {
-  const match = fileName.match(/([\w-\d]+)\.ts$/);
+  const match = fileName.match(/^([\w-\d]+)\.ts$/);
 
   return match && match[1];
 };
@@ -16,7 +16,7 @@ const getEntryPath = (fileName: string) => lambdasDirPath + fileName;
 
 const entry = fs.readdirSync(lambdasDirPath).reduce((entry, fileName) => {
   const entryName = getEntryName(fileName);
-  console.log(getEntryPath(fileName));
+
   return entryName
     ? {
         ...entry,
@@ -33,7 +33,7 @@ const config = (env: Configuration) => ({
   externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].mjs",
+    filename: "[name].js",
   },
   plugins: [
     // Add your plugins here
